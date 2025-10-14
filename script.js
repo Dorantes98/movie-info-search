@@ -1,32 +1,32 @@
 // tiny helper to select one element by CSS selector
-const $ = selector => document.querySelector(selector);
+const $ = selector => document.querySelector(selector)
 
 // get key elements from the page
-const form = $('#searchForm');
-const input = $('#query');
-const results = $('#results');
+const form = $('#searchForm')
+const input = $('#query')
+const results = $('#results')
 
 // simple utility to show a message in the results area
 const renderMessage = text => {
-  results.innerHTML = `<p>${text}</p>`;
+  results.innerHTML = `<p>${text}</p>`
 }
 
 // listen to the form being submitted
 form.addEventListener('submit', async event => {
   // prevent the default form submission action
-  event.preventDefault();
-  const query = input.value.trim();
+  event.preventDefault()
+  const query = input.value.trim()
   if (!query) {
-    renderMessage('Type a movie title to search!');
-    return;
+    renderMessage('Type a movie title to search!')
+    return
   }
   renderMessage(`Searching for: ${query}...`)
   try {
-    const movies = await mockMovieSearch(query);
-    renderResults(movies);
+    const movies = await mockMovieSearch(query)
+    renderResults(movies)
   } catch (err) {
-    renderMessage('Something went wrong - try again');
-    console.error(err);
+    renderMessage('Something went wrong - try again')
+    console.error(err)
   }
 })
 
@@ -40,17 +40,17 @@ const MOCK_MOVIES = [
 
 // fake an async search that "takes time"
 const mockMovieSearch = async query => {
-  await new Promise(resolve => setTimeout(resolve, 500));
-  const q = query.toLowerCase();
-  return MOCK_MOVIES.filter(m => m.title.toLowerCase().includes(q));
+  await new Promise(resolve => setTimeout(resolve, 500))
+  const q = query.toLowerCase()
+  return MOCK_MOVIES.filter(m => m.title.toLowerCase().includes(q))
 }
 
 // render a simple list of results
 const renderResults = movies => {
   if (!movies || movies.length === 0) {
-    renderMessage('No results - try another search?');
-    return;
+    renderMessage('No results - try another search?')
+    return
   }
-  const items = movies.map(m => `<li>${m.title} (${m.year})</li>`).join('');
-  results.innerHTML = `<ul>${items}</ul>`;
+  const items = movies.map(m => `<li>${m.title} (${m.year})</li>`).join('')
+  results.innerHTML = `<ul>${items}</ul>`
 }
