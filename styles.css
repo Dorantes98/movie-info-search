@@ -1,28 +1,101 @@
 /* ===== Base page styling ===== */
 body {
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: #e5e7eb; 
-  text-align: center;
-  padding: 20px;
-  margin: 0;
+  font-family: Arial, sans-serif;          /* Choose a clean, common font */
+  background: #0f172a;                     /* Dark blue background */
+  color: #e5e7eb;                          /* Light gray text color for contrast */
+  text-align: center;                      /* Center text for simple, clean look */
+  padding: 20px;                           /* Space around the edges of the page */
+  margin: 0;                               /* Remove default browser margin */
 }
 
-/* title */
+/* Title at the top */
 h1 {
-  margin: 0 0 20px 0;
-  font-size: 28px;
-  font-weight: 700;
+  margin: 0 0 20px 0;                      /* No top margin, 20px bottom spacing */
+  font-size: 28px;                         /* Make it bigger than default */
+  font-weight: 700;                        /* Bold for emphasis */
 }
 
-/* search form */
+/* The search form wrapper */
 form {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 20px;  
-  background: #111827; 
-  border: 1px solid #1f2937;              
-  padding: 10px;                          
-  border-radius: 10px; 
+  display: inline-flex;                    /* Lay out input and button in a row, shrink to content width */
+  gap: 8px;                                /* Space between input and button */
+  align-items: center;                     /* Vertically center input/button if heights differ */
+  margin-bottom: 20px;                     /* Space below the form before results */
+  background: #111827;                     /* Slightly lighter panel than the page bg */
+  border: 1px solid #1f2937;               /* Thin border for definition */
+  padding: 10px;                           /* Inner padding around input/button */
+  border-radius: 10px;                     /* Rounded corners for friendlier look */
+}
+
+/* The text input */
+input#query {
+  width: min(420px, 70vw);                 /* Responsive width: up to 420px or 70% of viewport */
+  padding: 10px 12px;                      /* Inner spacing: top/bottom 10px, sides 12px */
+  border-radius: 8px;                      /* Rounded corners */
+  border: 1px solid #374151;               /* Subtle border to outline the input */
+  background: #0b1220;                     /* Dark input background */
+  color: #e5e7eb;                          /* Light text for contrast */
+  outline: none;                           /* Remove default blue outline (we’ll style focus next) */
+}
+
+/* Visual feedback when input is focused (clicked/active) */
+input#query:focus {
+  border-color: #93c5fd;                   /* Light blue border on focus */
+  box-shadow: 0 0 0 3px rgba(147,197,253,.15); /* Soft glow ring for accessibility */
+}
+
+/* The search button */
+button[type="submit"] {
+  padding: 10px 14px;                      /* Comfortable click target */
+  border: 1px solid #374151;               /* Border for definition */
+  border-radius: 8px;                      /* Rounded corners */
+  background: #1f2937;                     /* Dark gray button background */
+  color: #e5e7eb;                          /* Light text */
+  cursor: pointer;                         /* Pointer cursor to indicate clickability */
+  transition: transform 120ms ease,        /* Smooth tiny scale animation */
+              filter 120ms ease;           /* Smooth brightness change */
+}
+
+/* Hover/active states to feel interactive */
+button[type="submit"]:hover {
+  filter: brightness(1.1);                 /* Slightly brighter on hover */
+}
+
+button[type="submit"]:active {
+  transform: scale(0.98);                  /* Tiny press effect */
+}
+
+/* ===== Results grid ===== */
+#results {
+  display: grid;                           /* Use CSS Grid for card layout */
+  grid-template-columns:                    /* Define responsive columns: */
+    repeat(auto-fill, minmax(200px, 1fr)); /* As many columns as fit; each ≥200px, otherwise share width */
+  gap: 15px;                                /* Space between cards */
+  margin-top: 10px;                         /* Space above the grid */
+  padding: 10px 0;                          /* Vertical breathing room */
+}
+
+/* Optional: a generic “card” look for future items we’ll render */
+#results .card {
+  background: #0b1220;                      /* Dark panel background */
+  border: 1px solid #1f2937;                /* Subtle border */
+  border-radius: 12px;                      /* Rounded corners */
+  padding: 12px;                            /* Inner spacing */
+  text-align: left;                         /* Cards read better left-aligned */
+  display: flex;                            /* Prepare for vertical layout inside */
+  flex-direction: column;                   /* Stack inner elements top-to-bottom */
+  gap: 8px;                                 /* Space between inner elements */
+}
+
+/* Placeholder image area if needed later */
+#results .thumb {
+  width: 100%;                              /* Take full card width */
+  aspect-ratio: 2 / 3;                      /* Poster-like proportion */
+  background: #111827;                      /* Neutral bg when no image */
+  border: 1px solid #1f2937;                /* Outline */
+  border-radius: 10px;                      /* Rounded corners */
+  display: grid;                            /* Center any text inside easily */
+  place-items: center;                      /* Center content horizontally/vertically */
+  color: #9ca3af;                           /* Muted text color for placeholders */
+  font-size: 14px;                          /* Smaller text for placeholders */
 }
