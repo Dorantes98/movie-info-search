@@ -1,5 +1,5 @@
 // api config
-const API_KEY = ''
+const API_KEY = '3fcedd4f'
 const OMDB_BASE = 'https://www.omdbapi.com/'
 
 // tiny helper to select one element by CSS selector
@@ -51,8 +51,10 @@ const mockMovieSearch = async query => {
 
 // normalize omdb shape to our simple shape
 const toSimple = omdb => ({
+  id: omdb.imdbID,
   title: omdb.Title,
-  year: omdb.Year
+  year: omdb.Year,
+  poster: omdb.Poster && omdb.Poster !== 'N/A' ? omdb.Poster : '' // empty string means "no usable poster"
 })
 
 // render a simple list of results
@@ -61,11 +63,42 @@ const renderResults = movies => {
     renderMessage('No results - try another search?')
     return
   }
-  const items = movies
+  results.innerHTML = ''
+  movies
     .map(toSimple)
-    .map(m => `<li>${m.title} (${m.year})</li>`)
-    .join('')
-  results.innerHTML = `<ul>${items}</ul>`
+    .forEach(m => {
+      const card = document.createElement('article')
+      card.className = 'card'
+
+      // poster(or simple text fallback)
+      const thumb = m.poster
+      ? document.createElement('img')
+      : document.createElement('div')
+
+      if (m.poster) {
+        thumb.src = m.poster
+        thumb.alt = m.title
+        thumb.className = 'thumb'
+      } else {
+        thumb.className = 'thumb'
+        thumb.textContent = 'No Poster'
+      }
+
+      // title and year
+      const title = document.createElement('h2')
+      title.textContent = m.title
+
+      const meta = document.createElement('div')
+      meta.className = 'meta'
+      meta.textContent = m.year
+
+      // assemble card
+      card.appendChild(thumb)
+      card.appendChild(title)
+      card.appendChild(meta)
+
+      results.appendChild(card)
+    })
 }
 
 // search the real OMDB api
