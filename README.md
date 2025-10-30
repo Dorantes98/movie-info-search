@@ -8,12 +8,12 @@ Built with **HTML**, **CSS**, and **JavaScript** using only the Fetch API and DO
 
 ## 🌟 Features
 
-- 🔍 **Movie Search:** Fetches movie data from the OMDb API by title  
-- 🖼️ **Poster Grid:** Displays search results in clean, responsive cards  
-- 🧠 **Dynamic Overlay:** Click “Details” to view full movie info (plot, rating, genre, runtime)  
-- ⚙️ **Loading & Error States:** Handles loading indicators and failed searches gracefully  
-- 🎨 **Responsive Layout:** Works on desktop, tablet, and mobile  
-- ♿ **Accessible Modal:** Close with ESC, backdrop click, or the Close button  
+- **Movie Search:** Fetches movie data from the OMDb API by title  
+- **Poster Grid:** Displays search results in clean, responsive cards  
+- **Dynamic Overlay:** Click “Details” to view full movie info (plot, rating, genre, runtime)  
+- **Loading & Error States:** Handles loading indicators and failed searches gracefully  
+- **Responsive Layout:** Works on desktop, tablet, and mobile  
+- **Accessible Modal:** Close with ESC, backdrop click, or the Close button  
 
 ---
 
