@@ -34,3 +34,9 @@ Built with **HTML**, **CSS**, and **JavaScript** using only the Fetch API and DO
 | Tools | Fetch API, Async/Await, DOM Manipulation |
 
 ---
+
+🔗 **Live Demo:** [https://Dorantes98.github.io/movie-info-search](https://Dorantes98.github.io/movie-info-search)
+
+---
+
+👨‍💻 **Author:** [Dominick Dorantes](https://github.com/Dorantes98)
