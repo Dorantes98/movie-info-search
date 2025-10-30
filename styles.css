@@ -1,8 +1,8 @@
 /* ===== Base page styling ===== */
 body {
   font-family: Arial, sans-serif;          /* Choose a clean, common font */
-  background: #0f172a;                     /* Dark blue background */
-  color: #e5e7eb;                          /* Light gray text color for contrast */
+  background: #0f172a;                   /* Dark blue background */
+  color: #e5e7eb;                        /* Light gray text color for contrast */
   text-align: center;                      /* Center text for simple, clean look */
   padding: 20px;                           /* Space around the edges of the page */
   margin: 0;                               /* Remove default browser margin */
@@ -21,8 +21,8 @@ form {
   gap: 8px;                                /* Space between input and button */
   align-items: center;                     /* Vertically center input/button if heights differ */
   margin-bottom: 20px;                     /* Space below the form before results */
-  background: #111827;                     /* Slightly lighter panel than the page bg */
-  border: 1px solid #1f2937;               /* Thin border for definition */
+  background: #111827;                   /* Slightly lighter panel than the page bg */
+  border: 1px solid #1f2937;             /* Thin border for definition */
   padding: 10px;                           /* Inner padding around input/button */
   border-radius: 10px;                     /* Rounded corners for friendlier look */
 }
@@ -32,25 +32,25 @@ input#query {
   width: min(420px, 70vw);                 /* Responsive width: up to 420px or 70% of viewport */
   padding: 10px 12px;                      /* Inner spacing: top/bottom 10px, sides 12px */
   border-radius: 8px;                      /* Rounded corners */
-  border: 1px solid #374151;               /* Subtle border to outline the input */
-  background: #0b1220;                     /* Dark input background */
-  color: #e5e7eb;                          /* Light text for contrast */
+  border: 1px solid #374151;             /* Subtle border to outline the input */
+  background: #0b1220;                   /* Dark input background */
+  color: #e5e7eb;                        /* Light text for contrast */
   outline: none;                           /* Remove default blue outline (we’ll style focus next) */
 }
 
 /* Visual feedback when input is focused (clicked/active) */
 input#query:focus {
-  border-color: #93c5fd;                   /* Light blue border on focus */
+  border-color: #93c5fd;                  /* Light blue border on focus */
   box-shadow: 0 0 0 3px rgba(147,197,253,.15); /* Soft glow ring for accessibility */
 }
 
 /* The search button */
 button[type="submit"] {
   padding: 10px 14px;                      /* Comfortable click target */
-  border: 1px solid #374151;               /* Border for definition */
+  border: 1px solid #374151;             /* Border for definition */
   border-radius: 8px;                      /* Rounded corners */
-  background: #1f2937;                     /* Dark gray button background */
-  color: #e5e7eb;                          /* Light text */
+  background: #1f2937;                   /* Dark gray button background */
+  color: #e5e7eb;                        /* Light text */
   cursor: pointer;                         /* Pointer cursor to indicate clickability */
   transition: transform 120ms ease,        /* Smooth tiny scale animation */
               filter 120ms ease;           /* Smooth brightness change */
@@ -67,9 +67,9 @@ button[type="submit"]:active {
 
 /* ===== Results grid ===== */
 #results {
-  display: grid;                           /* Use CSS Grid for card layout */
+  display: grid;                            /* Use CSS Grid for card layout */
   grid-template-columns:                    /* Define responsive columns: */
-    repeat(auto-fill, minmax(200px, 1fr)); /* As many columns as fit; each ≥200px, otherwise share width */
+    repeat(auto-fill, minmax(200px, 1fr));  /* As many columns as fit; each ≥200px, otherwise share width */
   gap: 15px;                                /* Space between cards */
   margin-top: 10px;                         /* Space above the grid */
   padding: 10px 0;                          /* Vertical breathing room */
@@ -77,8 +77,8 @@ button[type="submit"]:active {
 
 /* Optional: a generic “card” look for future items we’ll render */
 #results .card {
-  background: #0b1220;                      /* Dark panel background */
-  border: 1px solid #1f2937;                /* Subtle border */
+  background: #0b1220;                    /* Dark panel background */
+  border: 1px solid #1f2937;              /* Subtle border */
   border-radius: 12px;                      /* Rounded corners */
   padding: 12px;                            /* Inner spacing */
   text-align: left;                         /* Cards read better left-aligned */
@@ -91,11 +91,108 @@ button[type="submit"]:active {
 #results .thumb {
   width: 100%;                              /* Take full card width */
   aspect-ratio: 2 / 3;                      /* Poster-like proportion */
-  background: #111827;                      /* Neutral bg when no image */
-  border: 1px solid #1f2937;                /* Outline */
+  background: #111827;                    /* Neutral bg when no image */
+  border: 1px solid #1f2937;              /* Outline */
   border-radius: 10px;                      /* Rounded corners */
   display: grid;                            /* Center any text inside easily */
   place-items: center;                      /* Center content horizontally/vertically */
-  color: #9ca3af;                           /* Muted text color for placeholders */
+  color: #9ca3af;                         /* Muted text color for placeholders */
   font-size: 14px;                          /* Smaller text for placeholders */
+}
+
+/* Overlay (modal) and related UI */
+
+/* Fullscreen overlay backdrop */
+.overlay {
+  position: fixed;               /* Stay fixed on screen (not scrolling with page) */
+  inset: 0;                      /* Cover entire viewport (top, right, bottom, left = 0) */
+  display: grid;                 /* Use grid so we can easily center content */
+  place-items: center;           /* Center the panel horizontally and vertically */
+  background: rgba(0,0,0,.6);  /* Semi-transparent black backdrop */
+  z-index: 999;                  /* Keep it on top of everything else */
+}
+
+/* Hide overlay when [hidden] attribute is present */
+.overlay[hidden] {
+  display: none;                 /* Remove it from layout/visibility */
+}
+
+/* Inner modal panel (the visible box) */
+.overlay__panel {
+  max-width: 900px;              /* Cap panel width for readability */
+  width: 96%;                    /* Let it shrink on smaller screens */
+  background: #0b1220;         /* Dark background to match app theme */
+  border: 1px solid #1f2937;   /* Subtle border for contrast */
+  border-radius: 12px;           /* Rounded corners for a smooth look */
+  padding: 16px;                 /* Inner spacing */
+  color: #e5e7eb;              /* Light text color for readability */
+  display: grid;                 /* Two-column layout: poster + details */
+  grid-template-columns: 220px 1fr; /* Left = 220px poster, right = text content */
+  gap: 16px;                     /* Space between columns */
+}
+
+/* Poster image styling */
+.overlay__poster {
+  width: 220px;                  /* Fixed width matches grid column */
+  height: auto;                  /* Keep aspect ratio */
+  border-radius: 10px;           /* Rounded edges */
+  border: 1px solid #1f2937;   /* Subtle border to separate from bg */
+  background: #111827;         /* Dark fallback color */
+}
+
+/* Placeholder shown when no poster is available */
+.overlay__placeholder {
+  width: 220px;                  /* Same width as poster */
+  aspect-ratio: 2 / 3;           /* Movie-poster proportions */
+  display: grid;                 /* Grid for easy centering */
+  place-items: center;           /* Center text in both directions */
+  background: #111827;         /* Dark background block */
+  border: 1px solid #1f2937;   /* Subtle border */
+  border-radius: 10px;           /* Rounded shape */
+  color: #9ca3af;              /* Muted gray text color */
+}
+
+/* Header row inside modal (title + close button) */
+.overlay__header {
+  display: flex;                  /* Arrange title and button side by side */
+  justify-content: space-between; /* Push them apart (left & right) */
+  gap: 8px;                       /* Small spacing between elements */
+  align-items: start;             /* Align tops of title and button */
+  margin-bottom: 6px;             /* Space below header before details */
+}
+
+/* Pill container (holds tags like Genre, Rated, etc.) */
+.pills {
+  display: flex;               /* Lay pills out horizontally */
+  flex-wrap: wrap;             /* Wrap to new lines if needed */
+  gap: 6px;                    /* Spacing between pills */
+  margin: 6px 0 10px 0;        /* Top/bottom margins for separation */
+}
+
+/* Individual pill style */
+.pill {
+  border: 1px solid #374151;   /* Thin gray border */
+  padding: 2px 8px;              /* Comfortable horizontal padding */
+  border-radius: 999px;          /* Fully rounded edges (capsule shape) */
+  font-size: 12px;               /* Small text for tags */
+  color: #cbd5e1;              /* Soft gray text color */
+}
+
+/* Reusable button (used for Details + Close) */
+.btn {
+  border: 1px solid #374151;   /* Outline in medium gray */
+  background: #1f2937;         /* Dark background to match theme */
+  color: #e5e7eb;              /* Light text for contrast */
+  border-radius: 8px;            /* Rounded corners */
+  padding: 8px 10px;             /* Comfortable click area */
+  cursor: pointer;               /* Pointer cursor to indicate interactivity */
+  transition: transform .12s ease, filter .12s ease; /* Smooth hover/press animation */
+}
+
+/* Hover and active states for buttons */
+.btn:hover {
+  filter: brightness(1.08);    /* Slightly brighten on hover */
+}
+.btn:active {
+  transform: scale(.98);       /* Slight "press" shrink animation */
 }
